@@ -20,12 +20,14 @@ Thinking in Java Ch 16 &amp; Ch 17
 產生，它的大小就會固定，無法動態改變，且在編譯之前就必須
 知道切確型別。
 
+
 ### Array的獨特之處
 Array可以持有基本型別(Ex:int char),而這是其他的泛型容器所
 做不到的，但在Autoboxing出現之後，基本型別與object之間的轉
 換皆為自動進行，這就使得泛型容器在使用時好像可以持有基本型別
 ，也同時因為Autoboxing出現的出現加上容器有著比array更多的功能
 ，在很多時候我們會選擇容器而非Array
+
 
 ### Array的記憶體	
 ![memory.jpg](photo/memory.jpg)
@@ -70,6 +72,8 @@ public class Reference {
 }
 
 ```
+
+
 ### 多維Array
 每一維度中的資料皆以{}區分，每一組相呼應的{}後定義的便是下一維度的Array資料
 ``` java
@@ -102,12 +106,15 @@ public class ThreeDimensionArray {
 	}
 }
 ```
+
+
 ### Array與泛型
 通常來說，array和泛型是不能混用的，我們無法使用參數化型別來形成array
 ``` java
 Peel<Banana>[] = peels = new Peel<Banana>[10]; //Illegal
 ```
 erasure會移去參數化型別的類別資訊，但array必須要知道所持物件的明確型別。
+	
 	
 ### 建立測試資料
 在測試時，如果能輕鬆地將array填滿，對於測試會相當有幫助
