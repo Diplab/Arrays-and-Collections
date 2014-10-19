@@ -13,24 +13,24 @@ Thinking in Java Ch 16 &amp; Ch 17
 
 
 ## Array
-	一種重要的資料結構，幾乎所有高階的程式語言都提供了Array，
-	其優點在於當要儲存大量同性質的資料時是很有效率的，而由於
-	在記憶體中是以連續間加以配置，這種連續的線性序列，使得它
-	存取元素的速度十分的快速，但也同樣有著它的限制，Array一旦
-	產生，它的大小就會固定，無法動態改變，且在編譯之前就必須
-	知道切確型別。
+一種重要的資料結構，幾乎所有高階的程式語言都提供了Array，
+其優點在於當要儲存大量同性質的資料時是很有效率的，而由於
+在記憶體中是以連續間加以配置，這種連續的線性序列，使得它
+存取元素的速度十分的快速，但也同樣有著它的限制，Array一旦
+產生，它的大小就會固定，無法動態改變，且在編譯之前就必須
+知道切確型別。
 
 ### Array的獨特之處
-	Array可以持有基本型別(Ex:int char),而這是其他的泛型容器所
-	做不到的，但在Autoboxing出現之後，基本型別與object之間的轉
-	換皆為自動進行，這就使得泛型容器在使用時好像可以持有基本型別
-	，也同時因為Autoboxing出現的出現加上容器有著比array更多的功能
-	，在很多時候我們會選擇容器而非Array
+Array可以持有基本型別(Ex:int char),而這是其他的泛型容器所
+做不到的，但在Autoboxing出現之後，基本型別與object之間的轉
+換皆為自動進行，這就使得泛型容器在使用時好像可以持有基本型別
+，也同時因為Autoboxing出現的出現加上容器有著比array更多的功能
+，在很多時候我們會選擇容器而非Array
 
 ### Array的記憶體	
 ![memory.jpg](photo/memory.jpg)
 	
-	兩者唯一的差別在於一個持有references 另一個持有基本型別之值
+兩者唯一的差別在於一個持有references 另一個持有基本型別之值
 ``` java
 
 public class Reference {
@@ -71,8 +71,7 @@ public class Reference {
 
 ```
 ### 多維Array
-	每一維度中的資料皆以{}區分，每一組相呼應的{}後定義的便是下一
-	維度的Array資料
+每一維度中的資料皆以{}區分，每一組相呼應的{}後定義的便是下一維度的Array資料
 ``` java
 import java.util.Arrays;
 
@@ -104,18 +103,18 @@ public class ThreeDimensionArray {
 }
 ```
 ### Array與泛型
-	通常來說，array和泛型是不能混用的，我們無法使用參數化型別來形成array
-	``` java
-	Peel<Banana>[] = peels = new Peel<Banana>[10]; //Illegal
-	```
-	erasure會移去參數化型別的類別資訊，但array必須要知道所持物件的明確型別。
+通常來說，array和泛型是不能混用的，我們無法使用參數化型別來形成array
+``` java
+Peel<Banana>[] = peels = new Peel<Banana>[10]; //Illegal
+```
+erasure會移去參數化型別的類別資訊，但array必須要知道所持物件的明確型別。
 	
 ### 建立測試資料
-	在測試時，如果能輕鬆地將array填滿，對於測試會相當有幫助
+在測試時，如果能輕鬆地將array填滿，對於測試會相當有幫助
 	
-	Arrays.fill()
-	java所提供的一個方法，能將單一數值或物件的reference複製到array中的每個
-	位置。
+- Arrays.fill()
+
+java所提供的一個方法，能將單一數值或物件的reference複製到array中的每個位置。
 ``` java
 package generatora;
 import java.util.Arrays;
@@ -138,8 +137,7 @@ public class FillingArrays {
 
 	
 ```
-	但這麼做只能建立單一元素的Array，為了要更有彈性會搭配Generator
-	以下介紹兩種產生器
+但這麼做只能建立單一元素的Array，為了要更有彈性會搭配Generator以下介紹兩種產生器
 
 ``` java
 package generatora;
@@ -363,7 +361,7 @@ public class GeneratorTest {
 
 }
 ```		
-	要由產生器來產生array需要再另外建立一個工具
+要由產生器來產生array需要再另外建立一個工具
 ``` java
 package generatora;
 
@@ -401,15 +399,15 @@ public class GeneratedTest {
 
 }
 ```	
-	透過這些我們就能建立一些有變化的測試資料
+透過這些我們就能建立一些有變化的測試資料
 	
 ### Arrays 工具
-	java.util中提供的 Arrays class之中提供了許多方法用以處理array
+java.util中提供的 Arrays class之中提供了許多方法用以處理array
+
 - array的複製
 
 
-	這個方法並不再Arrays中，但也是一個相當有用的方法
-	語法為 arraycopy(被copy的array, 起始位置, 要貼上的array, 起始位置,長度)
+這個方法並不再Arrays中，但也是一個相當有用的方法語法為 arraycopy(被copy的array, 起始位置, 要貼上的array, 起始位置,長度)
 ``` java
 package Arrays;
 import java.util.Arrays;
@@ -430,7 +428,7 @@ public class Arraycopy {
 ```
 - array的比較
 
-	使用equals()來檢驗兩個arrays是否相等
+使用equals()來檢驗兩個arrays是否相等
 
 ``` java
 package Arrays;
@@ -457,8 +455,7 @@ public class ComparingArrays {
 - array元素的比較
 	
 
-	藉由實作java.lang.Comparable interface 讓某個class具有比較
-	的能力
+藉由實作java.lang.Comparable interface 讓某個class具有比較的能力
 	
 ``` java
 package CompType;
@@ -513,9 +510,9 @@ public class CompType implements Comparable<CompType> {
 
 - array的排序
  
-	使用內建的sorting函式來進行排序(objects array需要有實作Comparator)
-	Java的排序演算法，會針對你所排序的型別來進行最佳化，面對基本型別是Quicksort
-	面對物件則採用Stable merge sort，所以我們不太需要擔心排序的效率問題。
+使用內建的sorting函式來進行排序(objects array需要有實作Comparator)
+Java的排序演算法，會針對你所排序的型別來進行最佳化，面對基本型別是Quicksort
+面對物件則採用Stable merge sort，所以我們不太需要擔心排序的效率問題。
 
 ``` java
 package CompType;
@@ -544,8 +541,8 @@ public class StringSorting {
 
 - 在已排序的array中進行搜尋
 
-	在array排序完畢後，我們可以利用Arrays.binarySearch() 快速搜尋其中某個元素
-	但千萬別用在未經排序的array上，其結果無法預測。
+在array排序完畢後，我們可以利用Arrays.binarySearch() 快速搜尋其中某個元素
+但千萬別用在未經排序的array上，其結果無法預測。
 	
 ``` java
 package CompType;
