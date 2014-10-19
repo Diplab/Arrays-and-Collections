@@ -28,7 +28,8 @@ Thinking in Java Ch 16 &amp; Ch 17
 	，在很多時候我們會選擇容器而非Array
 
 ### Array的記憶體	
-	![memory.jpg](photo/memory.jpg)
+![memory.jpg](photo/memory.jpg)
+	
 	兩者唯一的差別在於一個持有references 另一個持有基本型別之值
 ``` java
 
