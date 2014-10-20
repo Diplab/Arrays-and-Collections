@@ -2,7 +2,7 @@ package arrays;
 
 import java.util.Arrays;
 
-import util.CollectionData;
+import util.Generated;
 import util.RandomGenerators;
 
 /**
@@ -16,7 +16,7 @@ public class CompareArrays {
      */
     public static void main(String[] args) {
 	String[] stringArray1 =
-		CollectionData.arrays(String.class,
+		Generated.array(String.class,
 			new RandomGenerators.StringGenerator(), 5);
 	String[] stringArray2 = new String[stringArray1.length];
 	System.arraycopy(stringArray1, 0, stringArray2, 0, stringArray1.length);

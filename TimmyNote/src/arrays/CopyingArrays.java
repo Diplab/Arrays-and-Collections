@@ -2,7 +2,7 @@ package arrays;
 
 import java.util.Arrays;
 
-import util.CollectionData;
+import util.Generated;
 import util.RandomGenerators;
 
 /**
@@ -18,7 +18,7 @@ public class CopyingArrays {
      * @param args
      */
     public static void main(String[] args) {
-	String[] stringArray1 = CollectionData.arrays(String.class,
+	String[] stringArray1 = Generated.array(String.class,
 		new RandomGenerators.StringGenerator(), 5);
 	/*
 	 * get java.lang.ArrayIndexOutOfBoundsException

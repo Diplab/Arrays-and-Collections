@@ -1,10 +1,14 @@
 package util;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
+/**
+ * It's a little like Adapter pattern
+ * 
+ * @author timmy00274672
+ * 
+ * @param <T>
+ */
 @SuppressWarnings("serial")
 public class CollectionData<T> extends ArrayList<T> {
     public CollectionData(Generator<T> gen, int quantity) {
@@ -17,25 +21,4 @@ public class CollectionData<T> extends ArrayList<T> {
 	return new CollectionData<T>(gen, quantity);
     }
 
-    public static <T> T[] array(T[] a, Generator<T> gen) {
-	return new CollectionData<>(gen, a.length).toArray(a);
-    }
-
-    public static <T> T[] arrays(Class<T> type, Generator<T> gen, int size) {
-	@SuppressWarnings("unchecked")
-	T[] arrayTs = (T[]) Array.newInstance(type, size);
-	return array(arrayTs, gen);
-    }
-
-    public static void main(String[] args) {
-	RandomGenerators.setRandom(new Random(1)); // This will make the result
-						   // the same everytime
-
-	String[] strings = array(new String[4],
-		new RandomGenerators.StringGenerator());
-	System.out.println(Arrays.toString(strings));
-	
-	strings = arrays(String.class, new RandomGenerators.StringGenerator(), 4);
-	System.out.println(Arrays.toString(strings));
-    }
 }

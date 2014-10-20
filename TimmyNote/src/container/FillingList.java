@@ -19,7 +19,7 @@ class StringAddress {
 }
 
 /**
- * show Collections.nCopies (immutable), and Collections.fill (replace elements
+ * Show Collections.nCopies (immutable), and Collections.fill (replace elements
  * in List)
  * 
  * @author timmy00274672

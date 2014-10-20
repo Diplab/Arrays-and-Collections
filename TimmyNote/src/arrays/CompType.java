@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
-import util.CollectionData;
+import util.Generated;
 import util.Generator;
 
 /**
@@ -44,7 +44,7 @@ public class CompType implements Comparable<CompType> {
 	    }
 	};
 	CompType[] compTypes =
-		CollectionData.arrays(CompType.class, generator, 5);
+		Generated.array(CompType.class, generator, 5);
 	System.out.println(Arrays.toString(compTypes));
 
 	Arrays.sort(compTypes);
