@@ -1,32 +1,40 @@
 package util;
 
-import java.util.Arrays;
+import java.util.Random;
 
 /**
+ * 
  * @author timmy00274672
  * 
  */
-public class CountingGenerator {
+public class RandomGenerators {
+
+    private static Random random = new Random();
+
+    public static Random getRandom() {
+        return random;
+    }
+
+    public static void setRandom(Random random) {
+        RandomGenerators.random = random;
+    }
+
     public static class BooleanGenerator implements Generator<Boolean> {
-	private Boolean value = false;
 
 	@Override
 	public Boolean next() {
-	    value = !value;
-	    return value;
+	    return random.nextBoolean();
 	}
+
     }
 
     public static class CharGenerator implements Generator<Character> {
 	private static char[] chars = ("abcdefghijklmnopqrstuvwxyz"
 		+ "ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
 
-	private int cur = -1;
-
 	@Override
 	public Character next() {
-	    cur++;
-	    return chars[cur];
+	    return chars[random.nextInt(chars.length)];
 	}
     }
 
@@ -61,24 +69,15 @@ public class CountingGenerator {
 	}
     }
 
+    /**
+     * @param args
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     public static void main(String[] args) throws InstantiationException,
 	    IllegalAccessException {
-	testGenerators(CountingGenerator.class);
+	CountingGenerator.testGenerators(RandomGenerators.class);
 
-    }
-
-    public static void testGenerators(Class<?> class1) throws InstantiationException,
-	    IllegalAccessException {
-	for (Class<?> innerClass : class1.getClasses()) {
-	    if (!Arrays.asList(innerClass.getInterfaces()).contains(
-		    Generator.class))
-		continue;
-
-	    Generator<?> generator = (Generator<?>) innerClass.newInstance();
-	    for (int i = 0; i < 3; i++) {
-		System.out.println(String.format("%s \t", generator.next()));
-	    }
-	}
     }
 
 }
