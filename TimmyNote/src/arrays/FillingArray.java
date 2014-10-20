@@ -9,7 +9,6 @@ import java.util.Arrays;
  * 
  * @author timmy00274672
  * @see Arrays#equals(Object[], Object[])
- * d
  * @see Arrays#fill(Object[], Object)
  */
 public class FillingArray {
