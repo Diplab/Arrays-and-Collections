@@ -5,13 +5,13 @@ Thinking in Java Ch 16 &amp; Ch 17
 
 ## Outline
 - [Array](#Array)
-	+ [Array的獨特之處](#Array的獨特之處)
-	+ [Array的記憶體](#Array的記憶體)
-	+ [多維Array](#多維Array)
-	+ [Array與泛型](#Array與泛型)
+	+ [Array的獨特之處](#array的獨特之處)
+	+ [Array的記憶體](#array的記憶體)
+	+ [多維Array](#多維array)
+	+ [Array與泛型](#array與泛型)
 	+ [建立測試資料](#建立測試資料)
-	+ [Arrays 工具](#Arrays 工具)
-- [Collections](#Collections)
+	+ [Arrays 工具](#arrays-工具)
+- [Collections](#collections)
 
 ## Array
 
