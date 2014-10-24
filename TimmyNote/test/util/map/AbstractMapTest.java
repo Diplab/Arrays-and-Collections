@@ -1,5 +1,6 @@
 package util.map;
 
+import static org.junit.Assert.*;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,15 +8,17 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+
 import util.CountingMapData;
 
-public class AbstractMapTest extends TestCase {
+public class AbstractMapTest {
 
     protected AbstractMap<Integer, String> map, emptyMap;
 
-    protected void setUp() throws Exception {
-	super.setUp();
+    @Before
+    public void setUp() throws Exception {
 	map = new LinkedHashMap<>();
 	emptyMap = new LinkedHashMap<>();
 	map.putAll(new CountingMapData(25));
@@ -24,6 +27,7 @@ public class AbstractMapTest extends TestCase {
     /*
      * public void testHashCode() { fail("Not yet implemented"); }
      */
+    @Test
     public void testEquals() {
 	HashMap<Object, Object> hashMap = new HashMap<>();
 	hashMap.putAll(map);
@@ -31,15 +35,18 @@ public class AbstractMapTest extends TestCase {
 	assertEquals("Equals is based on entrySet", hashMap.equals(map), true);
     }
 
+    @Test
     public void testSize() {
 	assertEquals(map.size(), 25);
     }
 
+    @Test
     public void testIsEmpty() {
 	assertEquals(map.isEmpty(), false);
 	assertEquals(emptyMap.isEmpty(), true);
     }
 
+    @Test
     public void testContainsValue() {
 	emptyMap.put(1, "A");
 	assertEquals(emptyMap.containsValue("A"), true);
@@ -48,6 +55,7 @@ public class AbstractMapTest extends TestCase {
 	assertEquals(emptyMap.containsKey("B"), false);
     }
 
+    @Test
     public void testContainsKey() {
 	emptyMap.put(1, "A");
 	assertEquals(emptyMap.containsKey(1), true);
@@ -55,12 +63,14 @@ public class AbstractMapTest extends TestCase {
 	assertEquals(emptyMap.containsKey("A"), false);
     }
 
+    @Test
     public void testGet() {
 	emptyMap.put(1, "A");
 	assertEquals(emptyMap.get(1), "A");
 	assertEquals(emptyMap.get(2), null);
     }
 
+    @Test
     public void testPut() {
 	emptyMap.put(1, "A");
 	Set<Entry<Integer, String>> keySet = emptyMap.entrySet();
@@ -69,21 +79,25 @@ public class AbstractMapTest extends TestCase {
 	assertEquals(next.getKey(), new Integer(1));
     }
 
+    @Test
     public void testRemove() {
 	emptyMap.put(1, "A");
 	assertEquals(emptyMap.remove(1), "A");
 	assertEquals(emptyMap.remove(1), null);
     }
 
+    @Test
     public void testPutAll() {
 	assertEquals("PutAllError", map.size(), 25);
     }
 
+    @Test
     public void testClear() {
 	map.clear();
 	assertEquals(map.size(), 0);
     }
 
+    @Test
     public void testKeySet() {
 	emptyMap.put(1, "A");
 	Set<Integer> keySet = emptyMap.keySet();
@@ -107,6 +121,7 @@ public class AbstractMapTest extends TestCase {
 	assertNotNull(exception);
     }
 
+    @Test
     public void testValues() {
 	emptyMap.put(1, "A");
 	Collection<String> values = emptyMap.values();
@@ -124,6 +139,7 @@ public class AbstractMapTest extends TestCase {
 
     }
 
+    @Test
     public void testEntrySet() {
 	emptyMap.put(1, "A");
 	Set<Entry<Integer, String>> entrySet = emptyMap.entrySet();
@@ -134,20 +150,20 @@ public class AbstractMapTest extends TestCase {
 	first.setValue("B");
 	assertEquals(emptyMap.containsValue("B"), true);
 	assertEquals(emptyMap.containsValue("A"), false);
-	
+
 	emptyMap.put(2, "B");
 	emptyMap.put(3, "C");
 	assertEquals(entrySet.size(), 3);
-	
+
 	emptyMap.remove(1);
 	assertEquals(entrySet.size(), 2);
 	assertFalse(entrySet.remove(first));
-	
+
 	first = entrySet.iterator().next();
 	assertTrue(entrySet.remove(first));
 	assertFalse(entrySet.remove(first));
 	assertEquals(entrySet.size(), 1);
-	
+
 	emptyMap.putAll(map);
 	entrySet.removeAll(entrySet);
 	assertEquals(entrySet.size(), 0);
