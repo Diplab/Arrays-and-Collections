@@ -1,11 +1,15 @@
 package util.map;
 
 import java.util.AbstractMap;
+import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import util.CountingMapData;
 
 public class SlowMap<K, V> extends AbstractMap<K, V> {
 
@@ -52,27 +56,28 @@ public class SlowMap<K, V> extends AbstractMap<K, V> {
     }
 
     private class MapEntry implements Map.Entry<K, V> {
-	private int index;
 
-	public MapEntry(int index) {
+	K key;
+
+	public MapEntry(K key) {
 	    super();
-	    this.index = index;
+	    this.key = key;
 	}
 
 	@Override
 	public K getKey() {
-	    return keyList.get(index);
+	    return key;
 	}
 
 	@Override
 	public V getValue() {
-	    return valueList.get(index);
+	    return SlowMap.this.get(key);
 	}
 
 	@Override
 	public V setValue(V value) {
 	    V temp = getValue();
-	    valueList.set(index, value);
+	    SlowMap.this.put(key, value);
 	    return temp;
 
 	}
@@ -82,11 +87,17 @@ public class SlowMap<K, V> extends AbstractMap<K, V> {
 	    return String.format("%s=%s", getKey(), getValue());
 	}
 
+	@SuppressWarnings("rawtypes")
+	private SlowMap getOuterType() {
+	    return SlowMap.this;
+	}
+
 	@Override
 	public int hashCode() {
 	    final int prime = 31;
 	    int result = 1;
-	    result = prime * result + index;
+	    result = prime * result + getOuterType().hashCode();
+	    result = prime * result + ((key == null) ? 0 : key.hashCode());
 	    return result;
 	}
 
@@ -102,24 +113,67 @@ public class SlowMap<K, V> extends AbstractMap<K, V> {
 	    MapEntry other = (MapEntry) obj;
 	    if (!getOuterType().equals(other.getOuterType()))
 		return false;
-	    if (index != other.index)
+	    if (key == null) {
+		if (other.key != null)
+		    return false;
+	    } else if (!key.equals(other.key))
 		return false;
 	    return true;
-	}
-
-	private SlowMap<K, V> getOuterType() {
-	    return SlowMap.this;
 	}
 
     }
 
     @Override
     public Set<java.util.Map.Entry<K, V>> entrySet() {
-	Set<java.util.Map.Entry<K, V>> tempSet = new HashSet<>();
-	for (int i = 0; i < keyList.size(); i++) {
-	    tempSet.add(new MapEntry(i));
-	}
-	return tempSet;
+	return new AbstractSet<Map.Entry<K, V>>() {
+	    
+
+	    @Override
+	    public boolean remove(Object o) {
+		if (!(o instanceof Map.Entry)) {
+		    return false;
+		} else {
+		    @SuppressWarnings("unchecked")
+		    Map.Entry<K, V> entry = (java.util.Map.Entry<K, V>) o;
+
+		    boolean b = SlowMap.this.remove(entry.getKey()) != null;
+		    return b;
+		}
+
+	    }
+
+	    @Override
+	    public Iterator<java.util.Map.Entry<K, V>> iterator() {
+		return new Iterator<java.util.Map.Entry<K, V>>() {
+		    ArrayList<K> keyTempList = new ArrayList<>(keyList);
+		    int index = -1;
+
+		    @Override
+		    public boolean hasNext() {
+			return index < keyTempList.size() - 1;
+		    }
+
+		    @Override
+		    public java.util.Map.Entry<K, V> next() {
+			index++;
+			return new MapEntry(keyTempList.get(index));
+		    }
+
+		    @Override
+		    public void remove() {
+			index++;
+			SlowMap.this.remove(keyTempList.get(index));
+		    }
+		};
+	    }
+
+	    @Override
+	    public int size() {
+		return SlowMap.this.size();
+	    }
+
+	};
+
     }
 
     @Override
@@ -147,6 +201,65 @@ public class SlowMap<K, V> extends AbstractMap<K, V> {
 	} else {
 	    return valueList.get(index);
 	}
+    }
+
+    @SuppressWarnings("serial")
+    @Override
+    public Collection<V> values() {
+	return new AbstractSet<V>() {
+
+	    @Override
+	    public Iterator<V> iterator() {
+		return new Iterator<V>() {
+		    ArrayList<V> valueTempList = new ArrayList<>(valueList);
+		    int index = -1;
+
+		    @Override
+		    public boolean hasNext() {
+			return index < valueTempList.size() - 1;
+		    }
+
+		    @Override
+		    public V next() {
+			index++;
+			return valueTempList.get(index);
+		    }
+
+		    @Override
+		    public void remove() {
+			SlowMap.this.remove(keyList.get(index));
+		    }
+
+		};
+	    }
+
+	    @Override
+	    public int size() {
+		return keyList.size();
+	    }
+
+	    @Override
+	    public boolean remove(Object o) {
+		for (Iterator<V> iterator = iterator(); iterator.hasNext();) {
+		    V item = iterator.next();
+		    if (item.equals(o)) {
+			iterator.remove();
+			return true;
+		    }
+		}
+		return false;
+	    }
+	};
+    }
+
+    public static void main(String[] args) {
+	SlowMap<Integer, String> map = new SlowMap<>();
+	map.putAll(new CountingMapData(5));
+
+	System.out.format("%s, %s", map.keyList, map.keyList.indexOf(1));
+	map.remove(0);
+	System.out.format("%s, %s", map.keyList, map.keyList.indexOf(1));
+	map.entrySet().iterator().next();
     }
 
 }
