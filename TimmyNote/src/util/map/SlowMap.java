@@ -131,15 +131,26 @@ public class SlowMap<K, V> extends AbstractMap<K, V> {
 	    @Override
 	    public boolean remove(Object o) {
 		if (!(o instanceof Map.Entry)) {
+		    System.out.println("remove not instanceof");
 		    return false;
 		} else {
 		    @SuppressWarnings("unchecked")
-		    Map.Entry<K, V> entry = (java.util.Map.Entry<K, V>) o;
+		    Map.Entry<K, V> entry = (Entry<K, V>) o;
 
 		    boolean b = SlowMap.this.remove(entry.getKey()) != null;
 		    return b;
 		}
 
+	    }
+	    
+	    @Override
+	    public boolean removeAll(Collection<?> c) {
+		boolean result = false;
+		for (Iterator<?> iterator = c.iterator(); iterator.hasNext();) {
+		    Object object = (Object) iterator.next();
+		    result = result | remove(object);
+		}
+		return result;
 	    }
 
 	    @Override
@@ -203,7 +214,6 @@ public class SlowMap<K, V> extends AbstractMap<K, V> {
 	}
     }
 
-    @SuppressWarnings("serial")
     @Override
     public Collection<V> values() {
 	return new AbstractSet<V>() {
